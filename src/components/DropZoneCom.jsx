@@ -1,29 +1,25 @@
+/* eslint-disable react/prop-types */
 import { useDropzone } from "react-dropzone";
 import { DocumentIcon } from "@heroicons/react/24/outline";
-import useVideoProcessing from "../hooks/useVideoProcessing";
-import VideoItem from "./VideoItem";
+import SingleFileItem from "./SingleFileItem";
 
-function DropZoneCom() {
-  const {
-    videos,
-    startConversion,
-    setVideos,
-    loaded,
-    handleOutputFormatChange,
-    onConvert,
-    onDrop,
-    outputFormats,
-  } = useVideoProcessing();
-
+function DropZoneCom({
+  items,
+  setFunc,
+  startConversion,
+  handleOutputFormatChange,
+  outputFormats,
+  onDrop,
+  onConvert,
+  Formats,
+  progress,
+}) {
   const onRemove = (name) => {
-    const filterdVideos = videos.filter((video) => video.name != name);
-    setVideos(filterdVideos);
+    const filterdItems = items.filter((item) => item.name != name);
+    setFunc(filterdItems);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  if (!loaded) {
-    return <p>Loading</p>;
-  }
   return (
     <>
       <div
@@ -41,24 +37,26 @@ function DropZoneCom() {
         )}
       </div>
       <div className="mt-4">
-        {videos.map((video, index) => (
-          <VideoItem
+        {items.map((item, index) => (
+          <SingleFileItem
             key={index}
-            video={video}
+            item={item}
             onRemove={onRemove}
             handleOutputFormatChange={handleOutputFormatChange}
             startConversion={startConversion}
             outputFormats={outputFormats}
+            Formats={Formats}
+            progress={progress}
           />
         ))}
       </div>
-      <div className="flex bg-[#EFEEF3] px-3 py-3">
-        <p className="flex-1">Added {videos.length} files </p>
+      <div className="flex bg-[#EFEEF3] w-[700px] items-center px-3 py-3">
+        <p className="flex-1">Added {items.length} files </p>
         <button
           onClick={onConvert}
-          className="bg-[#656EE0] text-white px-4 py-2 text-sm hover:scale-105"
+          className="bg-[#656EE0] text-white font-bold text-md px-5 py-3 hover:scale-105"
         >
-          Convet All
+          Convert All
         </button>
       </div>
     </>

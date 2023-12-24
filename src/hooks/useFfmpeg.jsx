@@ -1,11 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { fetchFile, toBlobURL } from "@ffmpeg/util";
+import { fetchFile } from "@ffmpeg/util";
+import { useState } from "react";
 
-function useFfmpeg(setVideos) {
-  const [loaded, setLoaded] = useState(false);
-  const ffmpegRef = useRef(new FFmpeg());
-
+function useFfmpeg(setVideos, ffmpegRef) {
+  const [progress, setProgress] = useState(0);
   const mimeTypes = {
     mp3: "audio/mpeg",
     mp4: "video/mp4",
@@ -16,35 +13,6 @@ function useFfmpeg(setVideos) {
     avi: "video/x-msvideo",
   };
 
-  useEffect(() => {
-    const loadFFmpeg = async () => {
-      const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.5/dist/esm";
-      const ffmpeg = ffmpegRef.current;
-      ffmpeg.on("log", ({ message }) => {
-        console.log(message);
-      });
-      await ffmpeg.load({
-        coreURL: await toBlobURL(
-          `${baseURL}/ffmpeg-core.js`,
-          "text/javascript"
-        ),
-        wasmURL: await toBlobURL(
-          `${baseURL}/ffmpeg-core.wasm`,
-          "application/wasm"
-        ),
-        workerURL: await toBlobURL(
-          `${baseURL}/ffmpeg-core.worker.js`,
-          "text/javascript"
-        ),
-      });
-      setLoaded(true);
-    };
-
-    loadFFmpeg();
-
-    return () => {};
-  }, []);
-
   const transcodeVideo = async (inputFile, outputFormat) => {
     const inputFileName = inputFile.name;
     const outputFileName = inputFileName.replace(
@@ -52,6 +20,10 @@ function useFfmpeg(setVideos) {
       `.${outputFormat}`
     );
     const ffmpeg = ffmpegRef.current;
+    ffmpeg.on("progress", ({ progress }) => {
+      let porgreesPercent = (progress * 100).toFixed(0);
+      setProgress(porgreesPercent + "%");
+    });
     await ffmpeg.writeFile(inputFileName, await fetchFile(inputFile.file));
     await ffmpeg.exec(["-i", inputFileName, outputFileName]);
     const data = await ffmpeg.readFile(outputFileName);
@@ -71,7 +43,7 @@ function useFfmpeg(setVideos) {
     );
   };
 
-  return { loaded, transcodeVideo };
+  return { transcodeVideo, progress };
 }
 
 export default useFfmpeg;

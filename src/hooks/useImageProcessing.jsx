@@ -1,32 +1,33 @@
 import { useCallback, useState } from "react";
 import useFfmpeg from "./useFfmpeg";
 
-function useVideoProcessing(ffmpegRef) {
-  const [videos, setVideos] = useState([]);
+function useImageProcessing(ffmpegRef) {
+  const [images, setimages] = useState([]);
   const [startConversion, setStartConversion] = useState(false);
   const [outputFormats, setOutputFormats] = useState({});
-  const { transcodeVideo, progress } = useFfmpeg(setVideos, ffmpegRef);
+  const { transcodeVideo, progress } = useFfmpeg(setimages, ffmpegRef);
 
-  const handleOutputFormatChange = (videoName, format) => {
+  const handleOutputFormatChange = (imageName, format) => {
     setOutputFormats((prevFormats) => ({
       ...prevFormats,
-      [videoName]: format,
+      [imageName]: format,
     }));
   };
 
   const onConvert = async () => {
     setStartConversion(true);
-    for (const video of videos) {
+    for (const image of images) {
       try {
-        await transcodeVideo(video, outputFormats[video.name]);
+        await transcodeVideo(image, outputFormats[image.name]);
       } catch (error) {
         console.error("Error converting video:", error);
       }
     }
     setStartConversion(false);
   };
+
   const onDrop = useCallback((acceptedFiles) => {
-    const updatedVideos = acceptedFiles.map((file) => ({
+    const updatedImages = acceptedFiles.map((file) => ({
       name: file.name,
       type: file.type,
       size: file.size,
@@ -34,18 +35,19 @@ function useVideoProcessing(ffmpegRef) {
       downloadUrl: "",
       file,
     }));
-    setVideos((prevVideos) => [...prevVideos, ...updatedVideos]);
+    setimages((prevImages) => [...prevImages, ...updatedImages]);
   }, []);
+
   return {
-    videos,
-    startConversion,
-    outputFormats,
-    handleOutputFormatChange,
     onConvert,
     onDrop,
-    setVideos,
+    handleOutputFormatChange,
+    startConversion,
+    images,
+    setimages,
+    outputFormats,
     progress,
   };
 }
 
-export default useVideoProcessing;
+export default useImageProcessing;

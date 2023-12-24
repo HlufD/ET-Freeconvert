@@ -5,6 +5,8 @@ import {
   ChevronUpIcon,
 } from "@heroicons/react/24/solid";
 
+import { Link } from "react-router-dom";
+
 function Nav() {
   return (
     <nav className="sticky top-0 z-50 bg-white h-16 w-full shadow-md flex items-center justify-between px-5 ">
@@ -12,26 +14,40 @@ function Nav() {
         <div className="flex items-center">
           <ArrowPathRoundedSquareIcon className="w-8 h-8 text-blue-600 mr-2" />
           <span className="font-bold  text-lg">
-            <span className="text-blue-600">ET </span> Freeconvert
+            <Link to="/">
+              <span className="text-blue-600">ET </span> Freeconvert
+            </Link>
           </span>
         </div>
-        <ul className="flex items-center  space-x-5 text-gray-500 text-sm font-bold">
+        <ul className="flex items-center  space-x-5 text-gray-500  text-md font-bold">
           <li className="relative group  py-3 cursor-pointer">
             <div className="flex items-center  space-x-1">
-              <a href="">Converters </a>
+              <p href="">Converters </p>
               <ChevronDownIcon className="h-4 w-4 mt-[0.3rem] text-gray-500  group-hover:hidden" />
               <ChevronUpIcon className="hidden group-hover:inline h-4 w-4 mt-[0.3rem] text-gray-500" />
             </div>
             <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48  space-y-2 p-3">
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              <Link
+                to="/video"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Video Converter
-              </a>
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              </Link>
+              <Link
+                to="/audio"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Audio Converter
-              </a>
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              </Link>
+              <Link
+                to="/image"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Imgae Converter
-              </a>
+              </Link>
               <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
                 Video To Mp3
               </a>
@@ -43,7 +59,7 @@ function Nav() {
               <ChevronDownIcon className="h-4 w-4 mt-[0.3rem] text-gray-500  group-hover:hidden" />
               <ChevronUpIcon className="hidden group-hover:inline h-4 w-4 mt-[0.3rem] text-gray-500" />
             </div>
-            <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3">
+            <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3 shadow-md">
               <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
                 Video Compresssor
               </a>
@@ -61,7 +77,7 @@ function Nav() {
               <ChevronDownIcon className="h-4 w-4 mt-[0.3rem] text-gray-500  group-hover:hidden" />
               <ChevronUpIcon className="hidden group-hover:inline h-4 w-4 mt-[0.3rem] text-gray-500" />
             </div>
-            <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3">
+            <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3 shadow-md">
               <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
                 Video To GIF
               </a>
@@ -76,7 +92,7 @@ function Nav() {
               <ChevronDownIcon className="h-4 w-4 mt-[0.3rem] text-gray-500  group-hover:hidden" />
               <ChevronUpIcon className="hidden group-hover:inline h-4 w-4 mt-[0.3rem] text-gray-500" />
             </div>
-            <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3">
+            <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3 shadow-md">
               <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
                 Split Video
               </a>
