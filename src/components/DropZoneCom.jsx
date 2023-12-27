@@ -24,7 +24,7 @@ function DropZoneCom({
     <>
       <div
         {...getRootProps()}
-        className="border border-dashed border-blue-600 h-52 w-[700px] bg-[#EFEEF3] flex justify-center items-center"
+        className="border border-dashed border-blue-600 h-52 w-[50%] sm:w-[700px] bg-[#EFEEF3] flex justify-center items-center"
       >
         <input {...getInputProps()} />
         {isDragActive ? (
@@ -50,7 +50,7 @@ function DropZoneCom({
           />
         ))}
       </div>
-      <div className="flex bg-[#EFEEF3] w-[700px] items-center px-3 py-3">
+      <div className="flex bg-[#EFEEF3] w-[700px] items-center px-3 py-3 ">
         <p className="flex-1">Added {items.length} files </p>
         <button
           onClick={onConvert}

@@ -60,15 +60,27 @@ function Nav() {
               <ChevronUpIcon className="hidden group-hover:inline h-4 w-4 mt-[0.3rem] text-gray-500" />
             </div>
             <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3 shadow-md">
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              <Link
+                to="/video/compression"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Video Compresssor
-              </a>
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              </Link>
+              <Link
+                to="/audio/compression"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Audio Compresssor
-              </a>
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              </Link>
+              <Link
+                to="/image/compression"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Imgae Compresssor
-              </a>
+              </Link>
             </div>
           </li>
           <li className="relative group  py-3 cursor-pointer">
@@ -78,12 +90,20 @@ function Nav() {
               <ChevronUpIcon className="hidden group-hover:inline h-4 w-4 mt-[0.3rem] text-gray-500" />
             </div>
             <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3 shadow-md">
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              <Link
+                to="/video/gif"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Video To GIF
-              </a>
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              </Link>
+              <Link
+                to="/gif/video"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 GIF To Video
-              </a>
+              </Link>
             </div>
           </li>
           <li className="relative group  py-3 cursor-pointer">
@@ -93,15 +113,27 @@ function Nav() {
               <ChevronUpIcon className="hidden group-hover:inline h-4 w-4 mt-[0.3rem] text-gray-500" />
             </div>
             <div className="hidden bg-white  group-hover:flex flex-col absolute top-10 w-48 border space-y-2 p-3 shadow-md">
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              <Link
+                to="/video/split"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Split Video
-              </a>
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              </Link>
+              <Link
+                to="/audio/split"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Split Audio
-              </a>
-              <a className="hover:bg-[#727CF5] hover:text-white p-2" href="">
+              </Link>
+              <Link
+                to="/automatic-audio/split"
+                className="hover:bg-[#727CF5] hover:text-white p-2"
+                href=""
+              >
                 Silence Remover
-              </a>
+              </Link>
             </div>
           </li>
         </ul>

@@ -1,6 +1,6 @@
 import About from "../components/About";
 import DropZoneCom from "../components/DropZoneCom";
-import useImageProcessing from "../hooks/useImageProcessing";
+import useProcessing from "../hooks/useProcessing";
 import { imageFormats } from "../utils/fileFormats";
 
 // eslint-disable-next-line react/prop-types
@@ -10,11 +10,11 @@ function ImageConverter({ ffmpegRef }) {
     onDrop,
     handleOutputFormatChange,
     startConversion,
-    images,
-    setimages,
+    files,
+    setFiles,
     outputFormats,
     progress,
-  } = useImageProcessing(ffmpegRef);
+  } = useProcessing(ffmpegRef);
   return (
     <div className="mt-10 flex flex-col items-center">
       <div className="text-center  mt-3 mb-5 p-2">
@@ -24,8 +24,8 @@ function ImageConverter({ ffmpegRef }) {
         </p>
       </div>
       <DropZoneCom
-        items={images}
-        setFunc={setimages}
+        items={files}
+        setFunc={setFiles}
         handleOutputFormatChange={handleOutputFormatChange}
         onConvert={onConvert}
         onDrop={onDrop}

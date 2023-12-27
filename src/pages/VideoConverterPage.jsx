@@ -1,19 +1,19 @@
 import About from "../components/About";
 import DropZoneCom from "../components/DropZoneCom";
-import useVideoProcessing from "../hooks/useVideoProcessing";
+import useProcessing from "../hooks/useProcessing";
 import { videoFormats } from "../utils/fileFormats";
 // eslint-disable-next-line react/prop-types
 function VideoConverterPage({ ffmpegRef }) {
   const {
-    videos,
-    startConversion,
-    setVideos,
-    handleOutputFormatChange,
     onConvert,
     onDrop,
+    handleOutputFormatChange,
+    startConversion,
+    files,
+    setFiles,
     outputFormats,
     progress,
-  } = useVideoProcessing(ffmpegRef);
+  } = useProcessing(ffmpegRef);
 
   return (
     <div className="mt-10 flex flex-col items-center">
@@ -24,8 +24,8 @@ function VideoConverterPage({ ffmpegRef }) {
         </p>
       </div>
       <DropZoneCom
-        items={videos}
-        setFunc={setVideos}
+        items={files}
+        setFunc={setFiles}
         handleOutputFormatChange={handleOutputFormatChange}
         onConvert={onConvert}
         onDrop={onDrop}

@@ -11,9 +11,20 @@ function useFfmpeg(setVideos, ffmpegRef) {
     wmv: "video/x-ms-wmv",
     flv: "video/x-flv",
     avi: "video/x-msvideo",
+    aac: "audio/aac",
+    wav: "audio/wav",
+    ogg: "audio/ogg",
+    flac: "audio/flac",
+    au: "audio/basic",
+    m4a: "audio/mp4",
+    jpeg: "image/jpeg",
+    png: "image/png",
+    gif: "image/gif",
+    webp: "image/webp",
+    jpg: "image/jpeg",
   };
 
-  const transcodeVideo = async (inputFile, outputFormat) => {
+  const fileConversion = async (inputFile, outputFormat) => {
     const inputFileName = inputFile.name;
     const outputFileName = inputFileName.replace(
       /\.[^/.]+$/,
@@ -29,21 +40,62 @@ function useFfmpeg(setVideos, ffmpegRef) {
     const data = await ffmpeg.readFile(outputFileName);
 
     const mimeType = mimeTypes[outputFormat.toLowerCase()];
-    const transcodedBlob = new Blob([data], { type: mimeType });
+    const conerteddBlob = new Blob([data], { type: mimeType });
 
     setVideos((prevVideos) =>
       prevVideos.map((prevVideo) =>
         prevVideo.name === inputFileName
           ? {
               ...prevVideo,
-              downloadUrl: URL.createObjectURL(transcodedBlob),
+              downloadUrl: URL.createObjectURL(conerteddBlob),
             }
           : prevVideo
       )
     );
   };
 
-  return { transcodeVideo, progress };
+  const fileCompression = async (inputFile, ffmpegOptions) => {
+    try {
+      const inputFileName = inputFile.name;
+      const ffmpeg = ffmpegRef.current;
+
+      ffmpeg.on("progress", ({ progress }) => {
+        let progressPercent = (progress * 100).toFixed(0);
+        setProgress(progressPercent + "%");
+      });
+
+      await ffmpeg.writeFile(inputFileName, await fetchFile(inputFile.file));
+      const outputFileName = `out-${inputFileName}`;
+      const ffmpegCommand = [
+        "-i",
+        inputFileName,
+        ...ffmpegOptions,
+        outputFileName,
+      ];
+
+      await ffmpeg.exec(ffmpegCommand);
+
+      const compressedData = await ffmpeg.readFile(outputFileName);
+
+      const mimeType = mimeTypes[inputFileName.toLowerCase()];
+      const compressedBlob = new Blob([compressedData], { type: mimeType });
+
+      setVideos((prevVideos) =>
+        prevVideos.map((prevVideo) =>
+          prevVideo.name === inputFileName
+            ? {
+                ...prevVideo,
+                downloadUrl: URL.createObjectURL(compressedBlob),
+              }
+            : prevVideo
+        )
+      );
+    } catch (error) {
+      console.error("An error occurred during file compression:", error);
+    }
+  };
+
+  return { fileConversion, fileCompression, progress };
 }
 
 export default useFfmpeg;

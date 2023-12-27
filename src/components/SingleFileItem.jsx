@@ -12,8 +12,8 @@ const SingleFileItem = ({
 }) => {
   const fileType = item.type.split("/")[0];
   return (
-    <div className="flex space-x-3 border mt-4 p-3 w-[700px]">
-      <div className="flex items-center flex-1 space-x-3">
+    <div className="flex space-x-3 border mt-4 p-3 w-full mx-auto sm:w-[700px]">
+      <div className="hidden md:flex items-center flex-1 space-x-3">
         {fileType == "video" && (
           <video controls width="50">
             <source src={item.preview} type={item.type} />
@@ -24,31 +24,34 @@ const SingleFileItem = ({
         <p className="truncate w-20">{item.name}</p>
       </div>
       <div className="flex items-center space-x-6">
-        <p className="text-gray-500">
+        <p className="text-gray-500 hidden sm:block">
           {(item.size / (1024 * 1024)).toFixed(2)} MB
         </p>
         <div className="text-gray-500 flex items-center space-x-3">
           <p>Output:</p>
-          <select
-            name="outputFormat"
-            id=""
-            className="px-3 py-1 border border-[#868FEF] text-[#868FEF] rounded-sm bg-white"
-            onChange={(e) =>
-              handleOutputFormatChange(item.name, e.target.value)
-            }
-          >
-            {Formats.map((format) => {
-              return (
-                <option
-                  key={format}
-                  className="px-3 py-2 text-sm"
-                  value={format}
-                >
-                  {format.toUpperCase()}
-                </option>
-              );
-            })}
-          </select>
+
+          {Formats.length > 0 && (
+            <select
+              name="outputFormat"
+              id=""
+              className="px-3 py-1 border border-[#868FEF] text-[#868FEF] rounded-sm bg-white"
+              onChange={(e) =>
+                handleOutputFormatChange(item.name, e.target.value)
+              }
+            >
+              {Formats.map((format) => {
+                return (
+                  <option
+                    key={format}
+                    className="px-3 py-2 text-sm"
+                    value={format}
+                  >
+                    {format.toUpperCase()}
+                  </option>
+                );
+              })}
+            </select>
+          )}
         </div>
         <Cog6ToothIcon
           className={`w-8 h-8 text-[#656EE0] cursor-pointer transition ease-in-out hover:scale-125 ${
@@ -62,9 +65,13 @@ const SingleFileItem = ({
         {item.downloadUrl ? (
           <a
             href={item.downloadUrl}
-            download={`${item.name.split(".")[0]}.${outputFormats[
-              item.name
-            ].toLowerCase()}`}
+            download={
+              outputFormats[item.name]
+                ? `${item.name.split(".")[0]}.${outputFormats[
+                    item.name
+                  ].toLowerCase()}`
+                : `out-${item.name}`
+            }
             className="text-green-600 text-sm rounded-sm cursor-pointer border border-green-600 px-3 py-1 "
           >
             Download

@@ -6,7 +6,7 @@ import {
 
 function About() {
   return (
-    <div className="flex w-[800px] border border-t-blue-500 mt-12 mb-7 space-x-7 p-7 shadow-lg">
+    <div className="flex flex-col sm:flex-row w-[50%] space-y-5 sm:w-[850px] border border-t-blue-500 mt-12 mb-7 space-x-7 p-7 shadow-lg">
       <div className="space-y-4">
         <div className="flex flex-col items-center space-y-3">
           <FolderIcon className="w-10 text-blue-600" />
